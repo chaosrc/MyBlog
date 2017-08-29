@@ -1,6 +1,6 @@
 .container
   .blog-header.p-10.max-w-800
     .blog-menu
-      .menu-item home
+      a.menu-item(href="#") Home
     .blog-login
-      = isLogin ?'Admin':'Login'
+      a(href="#")= isLogin ?'Admin':'Login'
