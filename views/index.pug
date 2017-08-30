@@ -9,8 +9,17 @@ block header
 block content
   div.max-w-800.p-10.m-lr-auto
     h1= title
-    p Welcome to #{title}
-    ul
-      - var list=['a','b','c']
-      each l in list
-        li=l
+    p.text-center Welcome to #{title}
+    .article-lists.max-w-600
+      for item in articles||[]
+        .article-item
+          h2.article-title=  'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, aut!'
+          div.describe= item +  'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit dolorum earum quisquam nihil voluptate quaerat eius error nemo, delectus cumque?'
+          span.article-date 2017.7月.7日
+
+    .page-nav.max-w-600.float-clear
+      a.btn.float-left(
+        class=havePageUp?'':"btn-disable"
+        href=pathPageUp
+        ) 上一页
+      .btn.float-right 下一页

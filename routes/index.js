@@ -6,7 +6,9 @@ router.get('/', function(req, res, next) {
   res.render('index', 
       { 
         title: 'Express',
-        isLogin:true 
+        isLogin:true ,
+        articles:['a','b','c','d','e'],
+        pathPageUp: 'page/10001'
       }
     );
 });

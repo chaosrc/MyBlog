@@ -27,9 +27,9 @@ app.use(sassMiddleware({
   indentedSyntax:true,
   debug:true,
   sourceMap:true,
-  log:function(severity, key, val){
-    console.log(severity,key,val)
-  }
+  // log:function(severity, key, val){
+  //   console.log(severity,key,val)
+  // }
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 

@@ -4,6 +4,9 @@
 .m-10
   margin: 10px
 
+.max-w-600
+  max-width: 600px
+
 .max-w-800
   max-width: 800px
 
@@ -13,3 +16,46 @@
 .m-lr-auto
   margin-left: auto
   margin-right: auto
+
+.bg-primary
+  background: $color-primary
+
+.text-white
+  color:white
+
+.text-center
+  text-align: center
+
+.float-left
+  float: left
+
+.float-right
+  float: right
+
+.float-clear
+
+  &::after
+    clear: both
+    content: ''
+    display: table
+
+.btn
+  background: $color-lighter
+  border-radius: .2em
+  color: $color-text
+  cursor: pointer
+  display: inline-block
+  padding: .2em .5em
+
+  &:hover
+    background: $color-primary
+
+.btn-disable
+  background: #aaa
+  cursor: default
+
+  &:hover
+    background: #aaa
+  
+
+

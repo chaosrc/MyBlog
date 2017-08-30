@@ -1,13 +1,30 @@
-.blog-header
-	display: flex
-	margin: 0 auto
-	justify-content: space-between
-	font-size: 1.5em
+body
+	margin: 0
 
 a
-	&:link
-		text-decoration: none
+	color: $color-lighter
+	text-decoration: none
+
 	&:hover
+		color: $color-primary
 		text-decoration: underline
 
+.blog-header
+	display: flex
+	font-size: 1.5em
+	justify-content: space-between
+	margin: 0 auto
 
+	a
+		color: $color-text
+		transition: color .3s
+
+		&:hover
+			color: $color-lighter-2
+			text-decoration: none
+
+.footer
+	background: #aaa
+	color: $color-text
+	padding: 10px
+	text-align: center

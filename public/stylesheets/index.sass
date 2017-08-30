@@ -1,2 +1,23 @@
-@import 'share.sass'
-@import 'util/atom.sass'
+@import 'util/variable'
+@import 'util/atom'
+@import 'share'
+
+
+%normalize-margin
+  margin: 0
+
+.article-lists
+  .article-item
+    margin-top: 2em
+
+  .article-title
+    @extend %normalize-margin
+    margin: 5px 0
+
+  .describe
+    @extend %normalize-margin
+    font-size: 1.25em
+    margin: 5px 0
+
+.page-nav
+  margin: 2em 0
