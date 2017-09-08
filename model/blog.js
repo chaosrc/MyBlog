@@ -1,15 +1,19 @@
 let MongoClient = require('mongodb').MongoClient;
 
 function Blog(dbName, port){
-  let name = dbName | 'blog';
-  let pt = port | 27017;
+  this.dbname = dbName | 'blog';
+  this.port = port | 27017;
 
-  let url = `mongodb://localhost:${pt}/${name}`;
+  this.dburl = `mongodb://localhost:${this.port}/${this.dbname}`;
+
+ 
+}
+
+Blog.prototype.connect=function(){
   let self = this;
-
   return new Promise((resolve,reject)=>{
-    MongoClient.connect(url,(err,db)=>{
-      if (err) reject();
+    MongoClient.connect(self.dburl,(err,db)=>{
+      if (err) reject(err);
       
       self.blogDB = db;
       self.db=db.collection('blog');
@@ -28,16 +32,34 @@ Blog.prototype.findBlogs=function(options){
   let skip = page*limit;
 
   return new Promise((resolve,reject)=>{
-    
-    db.find({}).skip(skip).limit(limit).toArray((err,doc)=>{
-      if(err) reject();
-      resolve(doc,self);
+    let cursor =  db.find({}).skip(skip).limit(limit+1);
+    let result = {};
+    cursor.toArray((err,doc)=>{
+      if(err) reject(err);
+      if(doc.length<=limit){
+        result.docs = doc;
+        result.hasNext=false;
+      }else{
+        result.docs = doc.slice(0,limit);
+        result.hasNext = true;
+      }
+     
+      resolve(result);
     })
     
   });
 }
 
+Blog.prototype.findOne=function(options){
+  if(!options || !options._id) return;
+
+  return this.db.find({_id: options._id}).toArray().then((docs)=>{
+    return docs[0];
+  });
+}
+
 Blog.prototype.updateBlog=function(options){
+  if(!options||!options._id) return;
   let db = this.db;
   let self = this;
   let id = options._id;
@@ -76,7 +98,7 @@ Blog.prototype.deleteBlog=function(options){
   if(Object.keys(options).length===0){
     return db.deleteMany({});
   }
-  return db.deleteOne({_id:options._id});
+  return db.deleteOne({_id: options._id});
 }
 
 Blog.prototype.close=function(){

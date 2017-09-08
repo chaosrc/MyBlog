@@ -19,7 +19,10 @@ block content
 
     .page-nav.max-w-600.float-clear
       a.btn.float-left(
-        class=havePageUp?'':"btn-disable"
-        href=pathPageUp
+        class= havePageUp?'':"btn-disable"
+        href= pathPageUp
         ) 上一页
-      .btn.float-right 下一页
+      .btn.float-right(
+        class= havePageDown ? '':'btn-disable'
+        href= pathPageDown;
+      ) 下一页

@@ -15,8 +15,9 @@ describe('promise test',()=>{
       .then(x=>{
         console.log('promise finish');
         // done();
+        return 'return string from .then';
       });
-    result.then(x=>console.log('after promise'))
+    result.then(x=>console.log('after promise',x))
 
     assert.ok(result instanceof Promise);
   return result;

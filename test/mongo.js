@@ -4,19 +4,21 @@ let assert = require('assert');
 let url = 'mongodb://localhost:27017/myBlogTest';
 let mdb;
 
-beforeEach(()=>{
 
-  return new Promise((resolve,reject)=>{
-    MongoClient.connect(url,(err,db)=>{
-      if(err) reject();
-
-      mdb=db;
-      resolve();
-    })
-  });
-})
 
 describe('mongodb connect test',()=>{
+  beforeEach(()=>{
+    
+      return new Promise((resolve,reject)=>{
+        MongoClient.connect(url,(err,db)=>{
+          if(err) reject();
+    
+          mdb=db;
+          resolve();
+        })
+      });
+    })
+
   it('connect to myBlogTest',(done)=>{
     assert.notEqual(null,mdb);
     done();
@@ -38,40 +40,65 @@ let Blog = require('../model/blog.js');
 
 describe('test blog db',()=>{
   let blog;
-  beforeEach(()=>{
-    return new Blog().then(b=>blog=b);
+
+  before(()=>{
+    blog = new Blog();
+    return blog.connect()
+  });
+  
+  after(()=>{
+    blog.close();
   })
 
-  it('connect success',()=>{
-    assert.notEqual(null,blog)
-    assert.notEqual(null,blog.db)
+
+  it('connect test',()=>{
+      assert.notEqual(null,blog)
+      assert.notEqual(null,blog.db)
+
   });
 
   it('insert blog',()=>{
     
     return blog.insertBlog({title:'express',content:'lorem50'}).then(result=>{
       assert.notEqual(null,result.insertedId)
-      console.log(result.insertedId);
+      console.log('inserted ID',result.insertedId);
       // blog.close();
     });
   });
 
   it('find items',()=>{
     return blog.findBlogs({page:1})
-               .then(docs=>{
+               .then(result=>{
+                  let docs = result.docs;
                   assert.notEqual(null,docs);
-                  console.log(docs.length);
+                  console.log('has next',result.hasNext);
+                  console.log('page 1 length',docs.length);
                   
                });
+  })
+
+  it('find one item', ()=>{
+    let id;
+    return blog.findBlogs()
+      .then(result=>{
+        let docs = result.docs;
+        id = docs[1]._id;
+        return blog.findOne(docs[1])
+      })
+      .then(item=>{
+        assert.notEqual(null,item);
+        assert.ok(id.toString()===item._id.toString());
+      })
   })
 
   it('update item',()=>{
 
     return blog.findBlogs({page:1})
-      .then((docs,db)=>{
-
+      .then((findResult)=>{
+        let docs = findResult.docs;
         let item = docs[5];
-        let id = item._id;
+        if(!item) return;
+        // let id = item._id;
         item.content='update to lorem100';
 
         return blog.updateBlog(item)
@@ -80,6 +107,23 @@ describe('test blog db',()=>{
             assert.equal(1,result.result.ok);
           });
       });
+  });
+
+
+  it('delete item',()=>{
+
+    return blog.findBlogs({page:1})
+      .then(find=>{
+        let docs = find.docs;
+        return blog.deleteBlog(docs[0])
+          .then((result)=>{
+            assert.equal(1,result.result.ok);
+            return blog.deleteBlog(docs[1]);
+          })
+          .then(result=>{
+            assert.equal(1,result.result.ok);
+          })
+    })
   })
 
 })
