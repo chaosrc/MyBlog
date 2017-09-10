@@ -14,7 +14,7 @@ block content
       for item in articles||[]
         .article-item
           h2.article-title=  'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, aut!'
-          div.describe= item +  'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit dolorum earum quisquam nihil voluptate quaerat eius error nemo, delectus cumque?'
+          div.describe= item.content +  'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit dolorum earum quisquam nihil voluptate quaerat eius error nemo, delectus cumque?'
           span.article-date 2017.7月.7日
 
     .page-nav.max-w-600.float-clear
@@ -24,5 +24,5 @@ block content
         ) 上一页
       .btn.float-right(
         class= havePageDown ? '':'btn-disable'
-        href= pathPageDown;
+        href= pathPageDown
       ) 下一页

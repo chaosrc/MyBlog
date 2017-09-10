@@ -1,21 +1,28 @@
 var express = require('express');
 var router = express.Router();
-var BlogDB = require('./model/blog.js');
+var dbMiddleware = require('./middleware.js').blogDB;
 
-let blogdb = new BlogDB();
+
+router.use(dbMiddleware);
+
+router.use('/home/:page',function(req,res,next){
+  console.log('use middle',req.params.page);
+  next();
+})
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  blogdb.connect().then(()=>{
-    return blogdb.findBlogs({page:0})
-  });
+
   res.render('index', 
       { 
         title: 'Express',
         isLogin:true ,
-        articles:['a','b','c','d','e'],
+        articles:req.blogs,
         pathPageUp: 'page/10001'
       }
     );
+});
+router.get('/home/:page',function(req,res){
+  res.end(`page ${req.params.page}`);
 });
 
 module.exports = router;

@@ -24,3 +24,19 @@ describe('GET /not-exist-page',()=>{
       })
   })
 })
+
+describe('URL parmas' ,()=>{
+  it('should have parmas', done=>{
+  
+    request(app)
+      .get('/home/1')
+      .expect(200)
+      .expect(res=>{
+        console.log(res.body);
+      })
+      .end((e,r)=>{
+        if(e) console.log(e);
+        done();
+      })
+  })
+});
