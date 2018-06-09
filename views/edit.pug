@@ -1,0 +1,14 @@
+extend layout
+
+block header
+  include header.pug
+  script(src="/javascripts/api.js")
+
+block content
+  form(action="/api/edit", method="post")
+    label Title: 
+    input(type="text", name="title")
+    label Content
+    textarea(name="content", cols="30", rows="10")
+    button(type="submit") submit
+

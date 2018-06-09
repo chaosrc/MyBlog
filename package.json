@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha test/app.js --reporter list"
+    "test": "mocha test/mongo.js --reporter list"
   },
   "main": "app.js",
   "dependencies": {

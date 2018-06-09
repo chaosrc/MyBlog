@@ -12,10 +12,11 @@ block content
     p.text-center Welcome to #{title}
     .article-lists.max-w-600
       for item in articles||[]
-        .article-item
-          h2.article-title=  'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, aut!'
+        a(href= '/page/' + item._id).article-item 
+          h2.article-title= item.title + 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, aut!'
           div.describe= item.content +  'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit dolorum earum quisquam nihil voluptate quaerat eius error nemo, delectus cumque?'
           span.article-date 2017.7月.7日
+          span id:#{item._id}
 
     .page-nav.max-w-600.float-clear
       a.btn.float-left(

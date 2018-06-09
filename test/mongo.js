@@ -83,6 +83,7 @@ describe('test blog db',()=>{
       .then(result=>{
         let docs = result.docs;
         id = docs[1]._id;
+        console.log('id', id);
         return blog.findOne(docs[1])
       })
       .then(item=>{
@@ -91,6 +92,12 @@ describe('test blog db',()=>{
       })
   })
 
+  it('find one blog', ()=>{
+    let _id = '59ad1ee20664404761ba3832';
+    return blog.findOne({_id}).then(item => {
+      assert.notEqual(false, !!item);
+    })
+  })
   it('update item',()=>{
 
     return blog.findBlogs({page:1})

@@ -1,0 +1,12 @@
+extends layout
+
+block head
+  link(rel="stylesheet", href="/stylesheet/index.css")
+
+block header
+  include header.pug
+
+block content
+  h3 #{blog.title}
+  p= blog.content
+  small= 'id: ' + blog.id

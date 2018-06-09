@@ -1,19 +1,19 @@
 var express = require('express');
 var router = express.Router();
-var dbMiddleware = require('./middleware.js').blogDB;
+var db = require('./middleware.js');
+
+var blogList = db.blogList;
+var blogPage = db.blogPage;
 
 
-router.use(dbMiddleware);
+router.use('/home/:pageNumber',blogList);
+router.use('/',blogList);
 
-router.use('/home/:page',function(req,res,next){
-  console.log('use middle',req.params.page);
-  next();
-})
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', db.logBlog, function(req, res, next) {
 
-  res.render('index', 
-      { 
+  res.render('index',
+      {
         title: 'Express',
         isLogin:true ,
         articles:req.blogs,
@@ -21,8 +21,18 @@ router.get('/', function(req, res, next) {
       }
     );
 });
-router.get('/home/:page',function(req,res){
-  res.end(`page ${req.params.page}`);
+
+router.get('/home/:pageNumber',function(req,res){
+  res.render('index',
+      {
+        title: 'Express',
+        isLogin:true ,
+        articles:req.blogs,
+        pathPageUp: 'page/10001'
+      }
+    );
 });
+
+
 
 module.exports = router;

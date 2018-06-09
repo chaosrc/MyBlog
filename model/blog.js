@@ -53,9 +53,14 @@ Blog.prototype.findBlogs=function(options){
 Blog.prototype.findOne=function(options){
   if(!options || !options._id) return;
 
-  return this.db.find({_id: options._id}).toArray().then((docs)=>{
-    return docs[0];
-  });
+  return this.db
+          .find({_id: options._id})
+          .toArray()
+          .then((docs)=> {
+            console.log(docs);
+            docs;
+            return docs[0];
+          });
 }
 
 Blog.prototype.updateBlog=function(options){
