@@ -17,7 +17,8 @@ router.get('/', db.logBlog, function(req, res, next) {
         title: 'Express',
         isLogin:true ,
         articles:req.blogs,
-        pathPageUp: 'page/10001'
+        pathPageUp: 'page/10001',
+        total: req.total
       }
     );
 });
@@ -28,7 +29,9 @@ router.get('/home/:pageNumber',function(req,res){
         title: 'Express',
         isLogin:true ,
         articles:req.blogs,
-        pathPageUp: 'page/10001'
+        pathPageUp: '/page/10001',
+        total: req.total,
+        test: 'abcdef'
       }
     );
 });

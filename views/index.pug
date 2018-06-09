@@ -9,7 +9,7 @@ block header
 block content
   div.max-w-800.p-10.m-lr-auto
     h1= title
-    p.text-center Welcome to #{title}
+    p.text-center Welcome to #{title} #{test}
     .article-lists.max-w-600
       for item in articles||[]
         a(href= '/page/' + item._id).article-item 
@@ -27,3 +27,4 @@ block content
         class= havePageDown ? '':'btn-disable'
         href= pathPageDown
       ) 下一页
+    p total #{total}

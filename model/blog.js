@@ -42,6 +42,7 @@ Blog.prototype.findBlogs=function(options){
       }else{
         result.docs = doc.slice(0,limit);
         result.hasNext = true;
+        result.total = doc.length;
       }
      
       resolve(result);

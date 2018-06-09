@@ -20,6 +20,7 @@ function blogList(req,res,next){
     .then(result=>{
       req.blogs = result.docs;
       req.hasNext = result.hasNext;
+      req.total = result.total;
       blog.close();
       next();
     })
